@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#fff" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/post_img"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:background="#ccc"
+            android:scaleType="fitXY" />
+
+        <ImageView
+            android:id="@+id/video_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/play" />
+    </RelativeLayout>
+	<TextView 
+         android:id="@+id/title"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:textSize="18dp"
+         android:textStyle="bold"
+         android:padding="10dp"/>
+    <WebView
+        android:id="@+id/web_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Thanks for watching :)"
+        android:textSize="16sp"
+        android:padding="10dp" />
+
+    <TextView
+        android:id="@+id/twitter_link"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tw"
+        android:textSize="16sp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" />
+
+    <TextView
+        android:id="@+id/facebook_link"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/fa"
+        android:textSize="16sp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" />
+
+</LinearLayout>
