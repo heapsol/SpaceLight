@@ -1,6 +1,7 @@
 package com.the.lightspace.Activites;
 
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,6 +9,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,19 +17,17 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.the.lightspace.BaseClasses.BaseActivity;
 import com.the.lightspace.Fragments.FragmentArtists;
-import com.the.lightspace.Fragments.FragmentMyCollection;
+import com.the.lightspace.Fragments.FragmentCategories;
 import com.the.lightspace.Fragments.FragmentSearch;
 import com.the.lightspace.R;
 
-public class Main2Activity extends BaseActivity
+public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
@@ -41,7 +41,7 @@ public class Main2Activity extends BaseActivity
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         PagerAdapter pagerAdapter =
-                new PagerAdapter(getSupportFragmentManager(), Main2Activity.this);
+                new PagerAdapter(getSupportFragmentManager(), MainActivity.this);
         viewPager.setAdapter(pagerAdapter);
 
         // Give the TabLayout the ViewPager
@@ -55,14 +55,7 @@ public class Main2Activity extends BaseActivity
         }
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -84,24 +77,12 @@ public class Main2Activity extends BaseActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main2, menu);
-        return true;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -111,6 +92,8 @@ public class Main2Activity extends BaseActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+
+        item.getIcon().setColorFilter(ContextCompat.getColor(MainActivity.this, R.color.colorPrimaryDark), PorterDuff.Mode.ADD);
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
@@ -122,8 +105,6 @@ public class Main2Activity extends BaseActivity
 
         } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -133,7 +114,7 @@ public class Main2Activity extends BaseActivity
 
     class PagerAdapter extends FragmentPagerAdapter {
 
-        String tabTitles[] = new String[]{"CATEGORIES", "SEARCH", "ARTISTS"};
+        String tabTitles[] = new String[]{"Motivation", "Spirituality", "Philosophy"};
         Context context;
 
         public PagerAdapter(FragmentManager fm, Context context) {
@@ -151,7 +132,7 @@ public class Main2Activity extends BaseActivity
 
             switch (position) {
                 case 0:
-                    return new FragmentMyCollection();
+                    return new FragmentCategories();
                 case 1:
                     return new FragmentSearch();
                 case 2:
@@ -168,7 +149,7 @@ public class Main2Activity extends BaseActivity
         }
 
         public View getTabView(int position) {
-            View tab = LayoutInflater.from(Main2Activity.this).inflate(R.layout.custom_tab, null);
+            View tab = LayoutInflater.from(MainActivity.this).inflate(R.layout.custom_tab, null);
             TextView tv = (TextView) tab.findViewById(R.id.custom_text);
 
             tv.setText(tabTitles[position]);

@@ -6,12 +6,6 @@
     <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-
     <style name="AppTheme" parent="Theme.AppCompat.Light">
         <item name="actionBarTheme">@style/AppTheme.ActionBarTheme</item> <!-- used for the back arrow on the action bar -->
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -23,6 +17,11 @@
         <!-- THIS is where you can color the arrow and the overflow button! -->
         <item name="colorControlNormal">@color/colorTabUnselected</item> <!-- sets the color for the back arrow -->
         <item name="actionOverflowButtonStyle">@style/actionOverflowButtonStyle</item> <!-- sets the style for the overflow button -->
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
     <!-- This style is where you define the tint color of your overflow menu button -->

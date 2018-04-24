@@ -32,7 +32,7 @@ public class SplashActivity extends Activity {
 			@Override
 			public void run() {
 				if(isOnline(SplashActivity.this)){
-				Intent i = new Intent(SplashActivity.this, Main2Activity.class);
+				Intent i = new Intent(SplashActivity.this, MainActivity.class);
 				startActivity(i);
 				finish();
 				}

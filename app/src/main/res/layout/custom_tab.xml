@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:textSize="12sp"
-        android:textColor="@color/colorTabUnselected"
+        android:textColor="@color/colorPrimaryDark"
         android:textStyle="bold"
         android:singleLine="true"
         />

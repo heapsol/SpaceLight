@@ -31,7 +31,7 @@ public class AboutActivity extends Activity {
 		case android.R.id.home:
 			// app icon in action bar clicked; go home
 			Intent intent = new Intent(AboutActivity.this,
-					Main2Activity.class);
+					MainActivity.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
 			return true;

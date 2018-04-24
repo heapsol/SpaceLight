@@ -2,7 +2,7 @@ package com.the.lightspace;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.the.lightspace.Activites.Main2Activity;
+import com.the.lightspace.Activites.MainActivity;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -70,7 +70,7 @@ public class ContactActivity extends Activity {
 		case android.R.id.home:
 			// app icon in action bar clicked; go home
 			Intent intent = new Intent(ContactActivity.this,
-					Main2Activity.class);
+					MainActivity.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
 			return true;
