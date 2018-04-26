@@ -1,72 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background" >
+    android:background="@drawable/background">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/mToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#efeff4"
+        android:theme="@style/AppTheme.ActionBarTheme"
+        app:layout_scrollFlags="scroll|enterAlways">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:layout_weight="0.1">
+
+                <ImageView
+                    android:id="@+id/icBack"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ic_back"
+                    android:tint="@color/colorPrimaryDark" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.8">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="About Us"
+                    android:textColor="#000000"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.1"
+                android:visibility="gone"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/icShare"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ic_share"
+                    android:tint="@color/colorPrimaryDark" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v7.widget.Toolbar>
+
 
     <ScrollView
         android:id="@+id/about_scroll"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/mToolbar">
 
         <LinearLayout
             android:id="@+id/about_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#C6ffffff"
-            android:orientation="vertical" >
+            android:background="#88000000"
+            android:orientation="vertical">
 
-            <com.android.volley.toolbox.NetworkRectImageView
+            <ImageView
                 android:id="@+id/about_img"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="250dp"
                 android:background="@drawable/about_img"
-                android:scaleType="fitXY" />
+                android:scaleType="centerCrop" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#88000000"
                 android:padding="10dp"
                 android:text="Welcome To The Light Space! :)"
+                android:textColor="@android:color/white"
                 android:textSize="22dp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#88000000"
                 android:padding="6dp"
                 android:text="@string/p1"
+                android:textColor="@android:color/white"
                 android:textSize="14dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#88000000"
                 android:padding="10dp"
                 android:text="Description"
-                android:textColor="#444"
+                android:textColor="@android:color/white"
                 android:textSize="16dp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#88000000"
                 android:padding="6dp"
                 android:text="@string/p2"
+                android:textColor="@android:color/white"
                 android:textSize="14dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#88000000"
                 android:padding="6dp"
                 android:text="@string/p3"
+                android:textColor="@android:color/white"
                 android:textSize="14dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#88000000"
                 android:padding="6dp"
                 android:text="@string/p4"
+                android:textColor="@android:color/white"
                 android:textSize="14dp" />
         </LinearLayout>
     </ScrollView>

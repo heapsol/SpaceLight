@@ -7,9 +7,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.the.lightspace.Activites.YouTubePlayerFragmentActivity;
+import com.bumptech.glide.Glide;
+import com.the.lightspace.Activites.BasicPlayerActivity;
+import com.the.lightspace.Activites.MainActivity;
+import com.the.lightspace.Fragments.FragmentCategories;
 import com.the.lightspace.Models.CategoriesModel;
 import com.the.lightspace.R;
 import com.the.lightspace.Util.ItemClickListener;
@@ -22,10 +26,10 @@ import java.util.ArrayList;
 
 public class AdapterCategories extends RecyclerView.Adapter<ViewHolder> {
 
-    private ArrayList<CategoriesModel> list;
+    private ArrayList<FragmentCategories.VideoEntry> list;
     private Activity mContext;
 
-    public AdapterCategories(ArrayList<CategoriesModel> list, Activity context) {
+    public AdapterCategories(ArrayList<FragmentCategories.VideoEntry> list, Activity context) {
         this.list = list;
         mContext = context;
         Log.e("value", " " + list.size());
@@ -40,14 +44,19 @@ public class AdapterCategories extends RecyclerView.Adapter<ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
 
-        Log.e("value", " " + list.get(position).getVideoID());
+        Log.e("value", " " + list.get(position).getVideoId());
+
+        Glide.with(mContext)
+                .load(list.get(position).getThumbnailsMedium())
+                .into((holder.ivThumbnail));
 
         holder.setClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
-                Intent i = new Intent(mContext, YouTubePlayerFragmentActivity.class);
+                Intent i = new Intent(mContext, BasicPlayerActivity.class);
+                i.putExtra("videoID",list.get(position).getVideoId().toString());
                 mContext.startActivity(i);
             }
         });
@@ -64,6 +73,7 @@ public class AdapterCategories extends RecyclerView.Adapter<ViewHolder> {
 class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
     private ItemClickListener clickListener;
+    public ImageView ivThumbnail;
 
     public ViewHolder(View view) {
         super(view);
@@ -71,6 +81,7 @@ class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
         view.setTag(view);
         view.setOnClickListener(this);
         view.setOnLongClickListener(this);
+        this.ivThumbnail = (ImageView) view.findViewById(R.id.ivThumbnail);
     }
 
     public void setClickListener(ItemClickListener itemClickListener) {

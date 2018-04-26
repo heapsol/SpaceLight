@@ -8,14 +8,19 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 
-public class ContactActivity extends Activity {
+public class ContactActivity extends AppCompatActivity {
 	LinearLayout email,website;
+	@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -26,9 +31,14 @@ public class ContactActivity extends Activity {
 		AdRequest adRequest = new AdRequest.Builder().build();
 		
 		adView.loadAd(adRequest);
-		
-		ActionBar bar = getActionBar();
-		bar.setDisplayHomeAsUpEnabled(true);
+
+
+		findViewById(R.id.icBack).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
 		email = (LinearLayout)findViewById(R.id.email_layout);
 		website = (LinearLayout)findViewById(R.id.website_layout);
 		email.setOnClickListener(new OnClickListener() {

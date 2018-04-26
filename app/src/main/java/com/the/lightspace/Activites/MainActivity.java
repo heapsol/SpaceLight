@@ -1,8 +1,12 @@
 package com.the.lightspace.Activites;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.PorterDuff;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -11,6 +15,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -19,25 +24,50 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.the.lightspace.BaseClasses.BaseActivity;
+import com.the.lightspace.ContactActivity;
 import com.the.lightspace.Fragments.FragmentArtists;
 import com.the.lightspace.Fragments.FragmentCategories;
 import com.the.lightspace.Fragments.FragmentSearch;
 import com.the.lightspace.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.net.SocketTimeoutException;
+import java.util.ArrayList;
+import java.util.List;
+
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+
+    ImageView icShare;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
+        icShare = (ImageView) findViewById(R.id.icShare);
         Toolbar toolbar = (Toolbar) findViewById(R.id.mToolbar);
         setSupportActionBar(toolbar);
 
+        clickListeners();
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         PagerAdapter pagerAdapter =
@@ -55,8 +85,6 @@ public class MainActivity extends BaseActivity
         }
 
 
-
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -65,6 +93,15 @@ public class MainActivity extends BaseActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    private void clickListeners() {
+        icShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shareApp();
+            }
+        });
     }
 
     @Override
@@ -93,18 +130,17 @@ public class MainActivity extends BaseActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        item.getIcon().setColorFilter(ContextCompat.getColor(MainActivity.this, R.color.colorPrimaryDark), PorterDuff.Mode.ADD);
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
+        if (id == R.id.nav_about_us) {
+            Intent i = new Intent(MainActivity.this, AboutActivity.class);
+            startActivity(i);
+        } else if (id == R.id.nav_app_info) {
+            Intent i = new Intent(MainActivity.this, AppInfoActivity.class);
+            startActivity(i);
+        } else if (id == R.id.nav_contact_us) {
+            Intent i = new Intent(MainActivity.this, ContactActivity.class);
+            startActivity(i);
         } else if (id == R.id.nav_share) {
-
+            shareApp();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -157,4 +193,13 @@ public class MainActivity extends BaseActivity
         }
     }
 
+    private void shareApp() {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT,
+                "Hey check out Space Light at: https://play.google.com/store/apps/details?id=com.the.lightspace");
+        sendIntent.setType("text/plain");
+        startActivity(sendIntent);
+    }
 }
+

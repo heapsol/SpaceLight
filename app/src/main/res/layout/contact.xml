@@ -1,21 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:application="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
-    <com.android.volley.toolbox.NetworkSquareImageView
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/mToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#efeff4"
+        android:theme="@style/AppTheme.ActionBarTheme"
+        application:layout_scrollFlags="scroll|enterAlways">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.1"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/icBack"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ic_back"
+                    android:tint="@color/colorPrimaryDark" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.8">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Contact Us"
+                    android:textColor="#000000"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.1"
+                android:gravity="center"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/icShare"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ic_share"
+                    android:tint="@color/colorPrimaryDark" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v7.widget.Toolbar>
+
+    <ImageView
         android:id="@+id/contact_img"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/contact_img"
-        android:scaleType="fitXY" />
+        android:layout_height="250dp"
+        android:layout_below="@+id/mToolbar"
+        android:scaleType="centerCrop"
+        android:src="@drawable/contact_img" />
 
     <TextView
+        android:id="@+id/tv"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/contact_img"
         android:background="#D4FFFFFF"
         android:padding="10dp"
         android:text="Looking forward to hearing from you!"
@@ -23,16 +90,27 @@
         android:textStyle="bold" />
 
     <View
+        android:id="@+id/view"
         android:layout_width="fill_parent"
         android:layout_height="2dp"
+        android:layout_below="@+id/tv"
         android:background="#c0c0c0" />
 
     <LinearLayout
         android:id="@+id/email_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#D4FFFFFF"
-        android:orientation="horizontal" >
+        android:layout_below="@id/view"
+        android:background="#88000000"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="30dp"
+            android:src="@drawable/ic_contact_us"
+            android:tint="@android:color/white" />
 
         <TextView
             android:id="@+id/email"
@@ -40,21 +118,34 @@
             android:layout_height="wrap_content"
             android:padding="15dp"
             android:text="lightspaceofficial@gmail.com"
-            android:textSize="14dp"
+            android:textColor="@android:color/white"
+            android:textSize="13dp"
             android:textStyle="bold" />
     </LinearLayout>
 
     <View
+        android:id="@+id/view2"
         android:layout_width="fill_parent"
         android:layout_height="1dp"
-        android:background="#c0c0c0" />
+        android:layout_below="@+id/email_layout"
+        android:background="#c0c0c0"
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/website_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#D4FFFFFF"
-        android:orientation="horizontal" >
+        android:layout_below="@+id/view2"
+        android:background="#88000000"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="30dp"
+            android:src="@drawable/ic_about_us"
+            android:tint="@android:color/white" />
 
         <TextView
             android:id="@+id/website"
@@ -62,14 +153,16 @@
             android:layout_height="wrap_content"
             android:padding="15dp"
             android:text="http://thelightspace.net"
-            android:textSize="14dp"
+            android:textColor="@android:color/white"
+            android:textSize="13dp"
             android:textStyle="bold" />
     </LinearLayout>
+
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         ads:adSize="BANNER"
-        ads:adUnitId="ca-app-pub-8762273904448098/3051380168" >
-    </com.google.android.gms.ads.AdView>
-</LinearLayout>
+        ads:adUnitId="ca-app-pub-8762273904448098/3051380168"></com.google.android.gms.ads.AdView>
+</RelativeLayout>

@@ -46,18 +46,21 @@
         <activity
             android:name=".Activites.AboutActivity"
             android:label="About Us"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".ContactActivity"
             android:label="Contact Us"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".Activites.YouTubePlayerFragmentActivity"
+            android:name=".Activites.BasicPlayerActivity"
             android:label="Contact Us"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name=".Activites.AppInfoActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name="com.google.android.gms.ads.AdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
