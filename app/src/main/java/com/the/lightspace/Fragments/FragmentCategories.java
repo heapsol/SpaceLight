@@ -22,7 +22,11 @@ import com.the.lightspace.Adapters.AdapterCategories;
 import com.the.lightspace.BaseClasses.BaseActivity;
 import com.the.lightspace.BaseClasses.BaseFragment;
 import com.the.lightspace.Models.CategoriesModel;
+import com.the.lightspace.Network.Api;
+import com.the.lightspace.Network.api.AllVideos.AllVideosApi;
+import com.the.lightspace.Network.api.AllVideos.AllVideosResponse;
 import com.the.lightspace.R;
+import com.the.lightspace.Util.Constant;
 import com.the.lightspace.Util.LinearDividerItemDecoration;
 
 import org.json.JSONArray;
@@ -41,7 +45,7 @@ import okhttp3.Response;
  * Created by Cool Programmer on 10/19/2017.
  */
 
-public class FragmentCategories extends BaseFragment {
+public class FragmentCategories extends BaseFragment implements AllVideosApi.AllVideosCallbackListener{
 
 
     private View view;
@@ -63,19 +67,35 @@ public class FragmentCategories extends BaseFragment {
         init(view);
         clickListeners();
 //        populateList();
-
-
+        fetchData();
         return view;
     }
 
     private void init(View view) {
-
         rvCategories = (RecyclerView) view.findViewById(R.id.rvCategories);
-
     }
 
     private void clickListeners() {
 
+    }
+
+    public void fetchData(){
+        Api.allVideosApi.getTattooWelcome(Constant.apiKey,Constant.channelId,
+                "snippet,id","date","20",this);
+    }
+
+    @Override
+    public void onVideosRetrieve(AllVideosResponse allVideosResponses) {
+        Log.e("item data"," "+allVideosResponses.getNextPageToken());
+        for (int k=0 ; k<allVideosResponses.getItems().size(); k++){
+            allVideosResponses.getItems().get(k).ids.getVideoId();
+            allVideosResponses.getItems().get(k).snippet.thumbnails.medium.getUrl();
+        }
+    }
+
+    @Override
+    public void onError(String error) {
+        Log.e("error"," "+error);
     }
 
     public static class VideoEntry {
