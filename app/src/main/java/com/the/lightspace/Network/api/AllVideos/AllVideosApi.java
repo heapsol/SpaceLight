@@ -20,7 +20,7 @@ public class AllVideosApi {
      * Welcome Api
      * @param mlistener
      */
-    public void getTattooWelcome(String key,
+    public void getVideos(String key,
                                  String channelId,
                                  String part,
                                  String order,

@@ -8,6 +8,8 @@ public interface Constant {
 
     String API_SEARCH = "search?";
 
+    String API_VIDEOS = "videos?";
+
     /*** Api Key *****/
     String apiKey = "AIzaSyDnbadjPHRq1xodGmL9IHfG6Ul5A6RP7Bc";
 

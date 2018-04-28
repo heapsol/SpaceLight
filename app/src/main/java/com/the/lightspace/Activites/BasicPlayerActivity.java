@@ -1,87 +1,40 @@
 package com.the.lightspace.Activites;
 
-
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
-import com.google.android.youtube.player.YouTubePlayerFragment;
 import com.google.android.youtube.player.YouTubePlayerView;
+import com.the.lightspace.Network.Api;
+import com.the.lightspace.Network.api.Statistics.VideosStatisticsApi;
+import com.the.lightspace.Network.api.Statistics.VideosStatisticsResponse;
 import com.the.lightspace.R;
+import com.the.lightspace.Util.Constant;
+
+import net.cachapa.expandablelayout.ExpandableLayout;
 
 /**
  * Created by npanigrahy on 04/07/2016.
  */
-//public class YouTubePlayerFragmentActivity extends YouTubeBaseActivity {
-//
-//
-//    @Override
-//    protected void onCreate(@Nullable Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_youtube_player_fragment);
-//
-//        final String VIDEO_ID = getIntent().getStringExtra("videoID");
-//        //initializing and adding YouTubePlayerFragment
-//        FragmentManager fm = getFragmentManager();
-//        String tag = YouTubePlayerFragment.class.getSimpleName();
-//        YouTubePlayerFragment playerFragment = (YouTubePlayerFragment) fm.findFragmentByTag(tag);
-//        if (playerFragment == null) {
-//            FragmentTransaction ft = fm.beginTransaction();
-//            playerFragment = YouTubePlayerFragment.newInstance();
-//            ft.add(android.R.id.content, playerFragment, tag);
-//            ft.commit();
-//        }
-//
-//        playerFragment.initialize(API_KEY, new YouTubePlayer.OnInitializedListener() {
-//            @Override
-//            public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-////                youTubePlayer.cueVideo(VIDEO_ID);
-//                youTubePlayer.setPlaybackEventListener(new YouTubePlayer.PlaybackEventListener() {
-//                    @Override
-//                    public void onPlaying() {
-//
-//                    }
-//
-//                    @Override
-//                    public void onPaused() {
-//
-//                    }
-//
-//                    @Override
-//                    public void onStopped() {
-//
-//                    }
-//
-//                    @Override
-//                    public void onBuffering(boolean b) {
-//
-//
-//                    }
-//
-//                    @Override
-//                    public void onSeekTo(int i) {
-//
-//                    }
-//                });
-//            }
-//
-//            @Override
-//            public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
-//                Toast.makeText(YouTubePlayerFragmentActivity.this, "Error while initializing YouTubePlayer.", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
-//}
 
-public class BasicPlayerActivity extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener {
+public class BasicPlayerActivity extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener, VideosStatisticsApi.VideosStatisticsCallbackListener {
 
-    public static final String API_KEY = "AIzaSyBx7v0YOb140fDO7EbfMx4l87raxezDWFw";
-    String VIDEO_ID = "";
+    private static final String API_KEY = "AIzaSyBx7v0YOb140fDO7EbfMx4l87raxezDWFw";
+    private String VIDEO_ID = "";
+    private int POSITION;
+    private String DESCRIPTION, TITLE;
+    private TextView tvDescription, tvViews, tvTitle;
+    private ImageView ivShowDescription;
+    private ExpandableLayout elDescription;
+    private RelativeLayout rlTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +42,15 @@ public class BasicPlayerActivity extends YouTubeBaseActivity implements YouTubeP
         // attaching layout xml
         setContentView(R.layout.activity_basic_player);
         VIDEO_ID = getIntent().getStringExtra("videoID");
+        POSITION = getIntent().getIntExtra("position", 0);
+        DESCRIPTION = getIntent().getStringExtra("description");
+        TITLE = getIntent().getStringExtra("title");
+
+        init();
+        fetchData();
+        clickListener();
+        expansionUpdateListeners();
+
         // Initializing YouTube player view
         YouTubePlayerView youTubePlayerView = (YouTubePlayerView) findViewById(R.id.youtube_player_view);
         youTubePlayerView.initialize(API_KEY, this);
@@ -160,4 +122,61 @@ public class BasicPlayerActivity extends YouTubeBaseActivity implements YouTubeP
         });
     }
 
+    private void init() {
+        elDescription = (ExpandableLayout) findViewById(R.id.elDescription);
+        ivShowDescription = (ImageView) findViewById(R.id.ivShowDescription);
+        tvDescription = (TextView) findViewById(R.id.tvDescription);
+        tvTitle = (TextView) findViewById(R.id.tvTitle);
+        tvViews = (TextView) findViewById(R.id.tvViews);
+        rlTitle = (RelativeLayout) findViewById(R.id.rlTitle);
+    }
+
+    private void clickListener() {
+        ivShowDescription.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (elDescription.isExpanded()) {
+                    elDescription.collapse();
+                } else {
+                    elDescription.expand();
+                }
+            }
+        });
+        rlTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (elDescription.isExpanded()) {
+                    elDescription.collapse();
+                } else {
+                    elDescription.expand();
+                }
+            }
+        });
+    }
+
+    private void expansionUpdateListeners() {
+        elDescription.setOnExpansionUpdateListener(new ExpandableLayout.OnExpansionUpdateListener() {
+            @Override
+            public void onExpansionUpdate(float expansionFraction, int state) {
+                ivShowDescription.setRotation(expansionFraction * 180);
+            }
+        });
+    }
+
+    public void fetchData() {
+        Api.videosStatisticsApi.getVideosStatistics("statistics", VIDEO_ID, Constant.apiKey, this);
+    }
+
+    @Override
+    public void onVideosStatisticsRetrieve(VideosStatisticsResponse videosStatisticsResponses) {
+//        Log.e("statistics_data", " " + videosStatisticsResponses.getItems().get(POSITION).getStatistics().getCommentCount());
+        tvViews.setText(videosStatisticsResponses.getItems().get(POSITION).getStatistics().getViewCount() + " views");
+        tvTitle.setText(TITLE);
+        tvDescription.setText(DESCRIPTION);
+    }
+
+    @Override
+    public void onError(String error) {
+        Log.e("statics_error", " " + error);
+    }
 }
