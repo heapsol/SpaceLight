@@ -54,7 +54,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".Activites.BasicPlayerActivity"
+            android:name=".Activites.YouTubePlayerFragmentActivity"
             android:label="Contact Us"
             android:screenOrientation="portrait"></activity>
         <activity

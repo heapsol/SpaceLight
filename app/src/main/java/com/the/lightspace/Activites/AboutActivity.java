@@ -15,7 +15,7 @@ public class AboutActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.about);
+        setContentView(R.layout.about_new);
 
         findViewById(R.id.icBack).setOnClickListener(new View.OnClickListener() {
             @Override
