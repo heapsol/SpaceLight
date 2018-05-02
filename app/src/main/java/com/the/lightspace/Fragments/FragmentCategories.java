@@ -82,11 +82,11 @@ public class FragmentCategories extends BaseFragment implements AllVideosApi.All
             list.add(model);
         }
         progress.dismiss();
-        rvCategories.setLayoutManager(new LinearLayoutManager(getContext()));
-        rvCategories.addItemDecoration(new LinearDividerItemDecoration(getContext(), getResources().getColor(R.color.colorScreenBackground), 20));
-        AdapterCategories adapter = new AdapterCategories(list, getActivity());
-        rvCategories.setNestedScrollingEnabled(false);
-        rvCategories.setAdapter(adapter);
+//        rvCategories.setLayoutManager(new LinearLayoutManager(getContext()));
+//        rvCategories.addItemDecoration(new LinearDividerItemDecoration(getContext(), getResources().getColor(R.color.colorScreenBackground), 20));
+//        AdapterCategories adapter = new AdapterCategories(list, getActivity());
+//        rvCategories.setNestedScrollingEnabled(false);
+//        rvCategories.setAdapter(adapter);
     }
 
     @Override

@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import com.the.lightspace.Activites.YouTubePlayerFragmentActivity;
-import com.the.lightspace.Fragments.FragmentCategories;
+import com.the.lightspace.Fragments.myFragment;
 import com.the.lightspace.R;
 import com.the.lightspace.Util.ItemClickListener;
 
@@ -32,10 +32,10 @@ import java.util.Date;
 
 public class AdapterCategories extends RecyclerView.Adapter<ViewHolder> {
 
-    private ArrayList<FragmentCategories.VideoEntry> list;
+    private ArrayList<myFragment.VideoEntry> list;
     private Activity mContext;
 
-    public AdapterCategories(ArrayList<FragmentCategories.VideoEntry> list, Activity context) {
+    public AdapterCategories(ArrayList<myFragment.VideoEntry> list, Activity context) {
         this.list = list;
         mContext = context;
         Log.e("value", " " + list.size());

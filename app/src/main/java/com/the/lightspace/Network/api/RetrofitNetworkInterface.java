@@ -1,5 +1,6 @@
 package com.the.lightspace.Network.api;
 
+import com.the.lightspace.Network.api.AllPlaylists.AllPlaylistsResponse;
 import com.the.lightspace.Network.api.AllVideos.AllVideosResponse;
 import com.the.lightspace.Network.api.Statistics.VideosStatisticsResponse;
 import com.the.lightspace.Util.Constant;
@@ -29,4 +30,10 @@ public interface RetrofitNetworkInterface {
     Call<VideosStatisticsResponse> getVideosStatistics(@Query("part") String part,
                                                        @Query("id") String id,
                                                        @Query("key") String key);
+
+    @GET(Constant.API_PLAYLISTS)
+    Call<AllPlaylistsResponse> getAllPlaylists(@Query("part") String part,
+                                               @Query("channelId") String id,
+                                               @Query("key") String key);
+
 }

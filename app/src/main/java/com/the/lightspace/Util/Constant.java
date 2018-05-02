@@ -10,6 +10,9 @@ public interface Constant {
 
     String API_VIDEOS = "videos?";
 
+    String API_PLAYLISTS = "playlists?";
+
+
     /*** Api Key *****/
     String apiKey = "AIzaSyDnbadjPHRq1xodGmL9IHfG6Ul5A6RP7Bc";
 

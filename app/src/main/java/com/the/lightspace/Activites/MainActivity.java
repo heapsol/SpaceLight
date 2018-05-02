@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -20,9 +21,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.the.lightspace.BaseClasses.BaseActivity;
-import com.the.lightspace.Fragments.FragmentArtists;
-import com.the.lightspace.Fragments.FragmentCategories;
-import com.the.lightspace.Fragments.FragmentSearch;
+
+import com.the.lightspace.Fragments.myFragment;
 import com.the.lightspace.R;
 
 public class MainActivity extends BaseActivity
@@ -50,6 +50,7 @@ public class MainActivity extends BaseActivity
 
         // Give the TabLayout the ViewPager
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         tabLayout.setupWithViewPager(viewPager);
 
         // Iterate over all tabs and set the custom view
@@ -124,12 +125,23 @@ public class MainActivity extends BaseActivity
 
     class PagerAdapter extends FragmentPagerAdapter {
 
-        String tabTitles[] = new String[]{"Motivation", "Spirituality", "Philosophy"};
+
+        String tabTitles[];
         Context context;
 
         public PagerAdapter(FragmentManager fm, Context context) {
             super(fm);
             this.context = context;
+            tabTitles = new String[baseApplication.myAllPlaylistsResponse.getItems().size()];
+            Log.e("no of Playlist", " " + baseApplication.myAllPlaylistsResponse.getItems().size() + "");
+
+
+            for (int i = 0; i < (baseApplication.myAllPlaylistsResponse.getItems().size()); i++) {
+                tabTitles[i] = baseApplication.myAllPlaylistsResponse.getItems().get(i).getSnippet().getTitle();
+                Log.e("Tab Title", " " + baseApplication.myAllPlaylistsResponse.getItems().get(i).getSnippet().getTitle().toString() + "");
+
+            }
+
         }
 
         @Override
@@ -140,14 +152,19 @@ public class MainActivity extends BaseActivity
         @Override
         public Fragment getItem(int position) {
 
-            switch (position) {
-                case 0:
-                    return new FragmentCategories();
-                case 1:
-                    return new FragmentSearch();
-                case 2:
-                    return new FragmentArtists();
+            for (int i = 0; i < tabTitles.length; i++) {
+                return new myFragment();
             }
+
+//
+//            switch (position) {
+//                case 0:
+//                    return new FragmentCategories();
+//                case 1:
+//                    return new FragmentSearch();
+//                case 2:
+//                    return new FragmentArtists();
+//            }
 
             return null;
         }
