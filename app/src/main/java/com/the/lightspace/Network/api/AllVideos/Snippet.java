@@ -29,6 +29,18 @@ public class Snippet {
     @Expose
     private String channelTitle;
 
+    @SerializedName("position")
+    @Expose
+    private int position;
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
     public String getPublishedAt() {
         return publishedAt;
     }
@@ -73,5 +85,9 @@ public class Snippet {
     @SerializedName("thumbnails")
     @Expose
     public Thumbnails thumbnails = new Thumbnails();
+
+    @SerializedName("resourceId")
+    @Expose
+    public ResourceId resourceId = new ResourceId();
 
 }

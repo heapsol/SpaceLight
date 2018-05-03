@@ -12,14 +12,6 @@ import java.util.List;
 
 public class AllVideosResponse extends BaseResponse {
 
-    @SerializedName("nextPageToken")
-    @Expose
-    private String nextPageToken;
-
-    @SerializedName("regionCode")
-    @Expose
-    private String regionCode;
-
     @SerializedName("pageInfo")
     @Expose
     public PageInfo pageInfo = new PageInfo();
@@ -27,12 +19,6 @@ public class AllVideosResponse extends BaseResponse {
     @SerializedName("items")
     @Expose
     public List<Items> items;
-
-    public void setNextPageToken(String nextPageToken){this.nextPageToken=nextPageToken;}
-    public String getNextPageToken(){return nextPageToken;}
-
-    public void setRegionCode(String regionCode){this.regionCode=regionCode;}
-    public String getRegionCode(){return regionCode;}
 
     public List<Items> getItems() {
         return items;
@@ -42,7 +28,7 @@ public class AllVideosResponse extends BaseResponse {
         this.items = items;
     }
 
-    public class Items{
+    public class Items {
 
         @SerializedName("etag")
         @Expose
@@ -50,7 +36,7 @@ public class AllVideosResponse extends BaseResponse {
 
         @SerializedName("id")
         @Expose
-        public Id ids = new Id();
+        private String id;
 
         @SerializedName("snippet")
         @Expose

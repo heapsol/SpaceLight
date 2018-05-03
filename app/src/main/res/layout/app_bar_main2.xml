@@ -16,7 +16,7 @@
             android:id="@+id/mToolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="#efeff4"
+            android:background="@android:color/white"
             android:theme="@style/AppTheme.ActionBarTheme"
             app:layout_scrollFlags="scroll|enterAlways">
 
@@ -74,7 +74,7 @@
             android:minHeight="?attr/actionBarSize"
             android:visibility="visible"
             app:elevation="5dp"
-            app:tabBackground="@color/colorTabBackground"
+            app:tabBackground="@android:color/white"
             app:tabIndicatorColor="@color/colorPrimaryDark"
             app:tabIndicatorHeight="3.5dp"
             app:tabMode="fixed"

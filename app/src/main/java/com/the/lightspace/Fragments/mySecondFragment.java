@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.the.lightspace.Adapters.AdapterCategories;
 import com.the.lightspace.BaseClasses.BaseFragment;
+import com.the.lightspace.Models.VideoEntry;
 import com.the.lightspace.Network.Api;
 import com.the.lightspace.Network.api.AllVideos.AllVideosApi;
 import com.the.lightspace.Network.api.AllVideos.AllVideosResponse;
@@ -24,14 +25,23 @@ import java.util.ArrayList;
  * Created by Cool Programmer on 5/2/2018.
  */
 
-public class myFragment extends BaseFragment implements AllVideosApi.AllVideosCallbackListener {
+public class mySecondFragment extends BaseFragment implements AllVideosApi.AllVideosCallbackListener {
 
 
     private View view;
-    ProgressDialog progress;
-    RecyclerView rvCategories;
+    private ProgressDialog progress;
+    private RecyclerView rvCategories;
     public ArrayList<VideoEntry> list;
+    private String playlistId;
+    private static mySecondFragment fragment;
 
+    public static mySecondFragment newInstance(String PlaylistID) {
+        Bundle args = new Bundle();
+        args.putString("PlaylistID", PlaylistID);
+        fragment = new mySecondFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,18 +74,20 @@ public class myFragment extends BaseFragment implements AllVideosApi.AllVideosCa
     }
 
     public void fetchData() {
-        Api.allVideosApi.getVideos(Constant.apiKey, Constant.channelId,
-                "snippet,id", "date", "20", this);
+        Log.e("PlaylistID", fragment.getArguments().getString("PlaylistID"));
+        Api.allVideosApi.getVideos("snippet", "50", fragment.getArguments().getString("PlaylistID"),
+                Constant.apiKey, this);
     }
 
     @Override
     public void onVideosRetrieve(AllVideosResponse allVideosResponses) {
-        Log.e("item data", " " + allVideosResponses.getNextPageToken());
+//        Log.e("item data", " " + allVideosResponses.())
         for (int k = 0; k < allVideosResponses.getItems().size(); k++) {
 
             VideoEntry model = new VideoEntry();
             model.setTitle(allVideosResponses.getItems().get(k).snippet.getTitle());
-            model.setVideoId(allVideosResponses.getItems().get(k).ids.getVideoId());
+//            Log.e("Video Ids", " "+allVideosResponses.getItems().get(k).snippet.resourceId.getVideoId());
+            model.setVideoId(allVideosResponses.getItems().get(k).snippet.resourceId.getVideoId());
             model.setThumbnailsMedium(allVideosResponses.getItems().get(k).snippet.thumbnails.medium.getUrl());
             model.setPublishedAt(allVideosResponses.getItems().get(k).snippet.getPublishedAt());
             model.setDescription(allVideosResponses.getItems().get(k).snippet.getDescription());
@@ -94,68 +106,6 @@ public class myFragment extends BaseFragment implements AllVideosApi.AllVideosCa
         Log.e("error", " " + error);
     }
 
-    public static class VideoEntry {
-        private String title, thumbnailSmall, thumbnailsMedium, thumbnailsLarge, publishedAt, description;
-        private String videoId;
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public void setThumbnailSmall(String thumbnailSmall) {
-            this.thumbnailSmall = thumbnailSmall;
-        }
-
-        public void setThumbnailsMedium(String thumbnailsMedium) {
-            this.thumbnailsMedium = thumbnailsMedium;
-        }
-
-        public void setThumbnailsLarge(String thumbnailsLarge) {
-            this.thumbnailsLarge = thumbnailsLarge;
-        }
-
-        public void setVideoId(String videoId) {
-            this.videoId = videoId;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public String getThumbnailSmall() {
-            return thumbnailSmall;
-        }
-
-        public String getThumbnailsMedium() {
-            return thumbnailsMedium;
-        }
-
-        public String getThumbnailsLarge() {
-            return thumbnailsLarge;
-        }
-
-        public String getVideoId() {
-            return videoId;
-        }
-
-//
-
-        public String getPublishedAt() {
-            return publishedAt;
-        }
-
-        public void setPublishedAt(String publishedAt) {
-            this.publishedAt = publishedAt;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public void setDescription(String description) {
-            this.description = description;
-        }
-    }
 
 }
 

@@ -18,33 +18,29 @@ public class AllVideosApi {
     /**
      * Get Tattoos by category and send objects in response or error
      * Welcome Api
+     *
      * @param mlistener
      */
-    public void getVideos(String key,
-                                 String channelId,
-                                 String part,
-                                 String order,
-                                 String maxResults ,final AllVideosCallbackListener mlistener)
-    {
 
-        Call<AllVideosResponse> call= RetrofitApiClient.getInstance(true).getAPI().getAllVideos( key, channelId, part,
-                order,
-                maxResults);
+    public void getVideos(String part,
+                          String maxResults,
+                          String playlistId,
+                          String key,
+                          final AllVideosCallbackListener mlistener) {
+
+        Call<AllVideosResponse> call = RetrofitApiClient.getInstance(true).getAPI().getAllVideos(part, maxResults, playlistId, key);
 
         call.enqueue(new Callback<AllVideosResponse>() {
             @Override
             public void onResponse(Call<AllVideosResponse> call, Response<AllVideosResponse> response) {
 
-                if(response.body()==null) {
+                if (response.body() == null) {
                     mlistener.onError("No Video!");
-                }
-                else if (response.body().getNextPageToken() != null)
-                {
+                } else if (response.body() != null) {
                     mlistener.onVideosRetrieve(response.body());
-                }else{
+                } else {
                     mlistener.onError(response.body().error.getMessage());
                 }
-
             }
 
             @Override
@@ -54,8 +50,9 @@ public class AllVideosApi {
         });
     }
 
-    public interface AllVideosCallbackListener{
+    public interface AllVideosCallbackListener {
         void onVideosRetrieve(AllVideosResponse allVideosResponses);
+
         void onError(String error);
     }
 }

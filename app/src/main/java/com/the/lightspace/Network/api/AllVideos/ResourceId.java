@@ -4,10 +4,10 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by ahmad on 4/27/18.
+ * Created by Cool Programmer on 5/3/2018.
  */
 
-public class Id {
+public class ResourceId {
 
     @SerializedName("kind")
     @Expose
@@ -17,8 +17,13 @@ public class Id {
     @Expose
     private String videoId;
 
-    public void setKind(String kind){this.kind=kind;}
-    public String getKind(){return kind;}
+    public String getKind() {
+        return kind;
+    }
+
+    public void setKind(String kind) {
+        this.kind = kind;
+    }
 
     public String getVideoId() {
         return videoId;

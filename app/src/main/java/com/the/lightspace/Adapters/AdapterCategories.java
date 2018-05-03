@@ -2,10 +2,7 @@ package com.the.lightspace.Adapters;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +12,14 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import com.the.lightspace.Activites.YouTubePlayerFragmentActivity;
-import com.the.lightspace.Fragments.myFragment;
+import com.the.lightspace.Fragments.myFirstFragment;
+import com.the.lightspace.Models.VideoEntry;
 import com.the.lightspace.R;
 import com.the.lightspace.Util.ItemClickListener;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -32,19 +29,19 @@ import java.util.Date;
 
 public class AdapterCategories extends RecyclerView.Adapter<ViewHolder> {
 
-    private ArrayList<myFragment.VideoEntry> list;
+    private ArrayList<VideoEntry> list;
     private Activity mContext;
 
-    public AdapterCategories(ArrayList<myFragment.VideoEntry> list, Activity context) {
+    public AdapterCategories(ArrayList<VideoEntry> list, Activity context) {
         this.list = list;
         mContext = context;
-        Log.e("value", " " + list.size());
+//        Log.e("value", " " + list.size());
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.custom_thumbnail_row, null);
+                .inflate(R.layout.custom_thumbnail_row_new, null);
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }
@@ -52,7 +49,7 @@ public class AdapterCategories extends RecyclerView.Adapter<ViewHolder> {
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-        Log.e("value", " " + list.get(position).getVideoId());
+//        Log.e("value", " " + list.get(position).getVideoId());
 
         holder.tvTitle.setText(list.get(position).getTitle());
         Glide.with(mContext)

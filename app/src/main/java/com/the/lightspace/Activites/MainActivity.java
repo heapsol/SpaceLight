@@ -22,7 +22,11 @@ import android.widget.TextView;
 
 import com.the.lightspace.BaseClasses.BaseActivity;
 
-import com.the.lightspace.Fragments.myFragment;
+import com.the.lightspace.Fragments.myFifthFragment;
+import com.the.lightspace.Fragments.myFirstFragment;
+import com.the.lightspace.Fragments.myFourtFragment;
+import com.the.lightspace.Fragments.mySecondFragment;
+import com.the.lightspace.Fragments.myThirdFragment;
 import com.the.lightspace.R;
 
 public class MainActivity extends BaseActivity
@@ -152,19 +156,18 @@ public class MainActivity extends BaseActivity
         @Override
         public Fragment getItem(int position) {
 
-            for (int i = 0; i < tabTitles.length; i++) {
-                return new myFragment();
+            switch (position) {
+                case 0:
+                    return new myFirstFragment().newInstance(baseApplication.myAllPlaylistsResponse.getItems().get(position).getId());
+                case 1:
+                    return new mySecondFragment().newInstance(baseApplication.myAllPlaylistsResponse.getItems().get(position).getId());
+                case 2:
+                    return new myThirdFragment().newInstance(baseApplication.myAllPlaylistsResponse.getItems().get(position).getId());
+                case 3:
+                    return new myFourtFragment().newInstance(baseApplication.myAllPlaylistsResponse.getItems().get(position).getId());
+                case 4:
+                    return new myFifthFragment().newInstance(baseApplication.myAllPlaylistsResponse.getItems().get(position).getId());
             }
-
-//
-//            switch (position) {
-//                case 0:
-//                    return new FragmentCategories();
-//                case 1:
-//                    return new FragmentSearch();
-//                case 2:
-//                    return new FragmentArtists();
-//            }
 
             return null;
         }

@@ -11,16 +11,16 @@ public class PageInfo {
 
     @SerializedName("totalResults")
     @Expose
-    private String totalResults;
+    private int totalResults;
 
     @SerializedName("resultsPerPage")
     @Expose
-    private String resultsPerPage;
+    private int resultsPerPage;
 
-    public void setTotalResults(String totalResults){this.totalResults=totalResults;}
-    public String getTotalResults(){return totalResults;}
+    public void setTotalResults(int totalResults){this.totalResults=totalResults;}
+    public int getTotalResults(){return totalResults;}
 
-    public void setResultsPerPage(String resultsPerPage){this.resultsPerPage=resultsPerPage;}
-    public String getResultsPerPage(){return resultsPerPage;}
+    public void setResultsPerPage(int resultsPerPage){this.resultsPerPage=resultsPerPage;}
+    public int getResultsPerPage(){return resultsPerPage;}
 
 }

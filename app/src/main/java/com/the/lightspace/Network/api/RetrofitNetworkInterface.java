@@ -17,12 +17,11 @@ public interface RetrofitNetworkInterface {
 
     // @TODO have to add all call methods here
 
-    @GET(Constant.API_SEARCH)
-    Call<AllVideosResponse> getAllVideos(@Query("key") String key,
-                                         @Query("channelId") String channelId,
-                                         @Query("part") String part,
-                                         @Query("order") String order,
-                                         @Query("maxResults") String maxResults);
+    @GET(Constant.API_PLAYLISTS_ITEMS)
+    Call<AllVideosResponse> getAllVideos(@Query("part") String part,
+                                         @Query("maxResults") String maxResults,
+                                         @Query("playlistId") String playlistId,
+                                         @Query("key") String key);
 
     // @TODO have to add all call methods here
 
