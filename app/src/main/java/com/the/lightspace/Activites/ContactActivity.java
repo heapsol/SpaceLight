@@ -24,6 +24,10 @@ public class ContactActivity extends AppCompatActivity {
     CardView email, website, facebook, twitter;
     DisplayMetrics displayMetrics;
     int height, width;
+    private final String fbUrl = "https://www.facebook.com/The-Light-Space-793291097403142/";
+    private final String twitterUrl = "https://twitter.com/TheLightSpace1";
+    private final String websiteUrl = "http://thelightspace.net";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +46,7 @@ public class ContactActivity extends AppCompatActivity {
 //        width = displayMetrics.widthPixels;
 //        Log.e("width, hight", width + ", " + height);
 //        findViewById(R.id.llMAin).setMinimumHeight(width);
-        findViewById(R.id.icBack).setOnClickListener(new OnClickListener() {
+        findViewById(R.id.icBackContact).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -55,13 +59,17 @@ public class ContactActivity extends AppCompatActivity {
         facebook.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent i = new Intent(ContactActivity.this, WebviewActivity.class);
+                i.putExtra("url", fbUrl );
+                startActivity(i);
             }
         });
         twitter.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent i = new Intent(ContactActivity.this, WebviewActivity.class);
+                i.putExtra("url", twitterUrl );
+                startActivity(i);
             }
         });
         email.setOnClickListener(new OnClickListener() {
@@ -81,11 +89,14 @@ public class ContactActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                Uri webpage = Uri.parse("http://thelightspace.net");
-                Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
-                if (intent.resolveActivity(getPackageManager()) != null) {
-                    startActivity(intent);
-                }
+//                Uri webpage = Uri.parse("http://thelightspace.net");
+//                Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+//                if (intent.resolveActivity(getPackageManager()) != null) {
+//                    startActivity(intent);
+//                }
+                Intent i = new Intent(ContactActivity.this, WebviewActivity.class);
+                i.putExtra("url", websiteUrl );
+                startActivity(i);
 
             }
         });
@@ -115,5 +126,6 @@ public class ContactActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
 
 }

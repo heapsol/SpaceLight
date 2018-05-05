@@ -94,7 +94,9 @@ public class myFirstFragment extends BaseFragment implements AllVideosApi.AllVid
             list.add(model);
         }
         progress.dismiss();
-        rvCategories.setLayoutManager(new LinearLayoutManager(getContext()));
+        LinearLayoutManager manager = new LinearLayoutManager(getContext());
+        manager.setReverseLayout(true);
+        rvCategories.setLayoutManager(manager);
         rvCategories.addItemDecoration(new LinearDividerItemDecoration(getContext(), getResources().getColor(R.color.colorScreenBackground), 20));
         AdapterCategories adapter = new AdapterCategories(list, getActivity());
         rvCategories.setNestedScrollingEnabled(false);

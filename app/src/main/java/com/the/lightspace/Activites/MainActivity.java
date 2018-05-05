@@ -29,11 +29,15 @@ import com.the.lightspace.Fragments.mySecondFragment;
 import com.the.lightspace.Fragments.myThirdFragment;
 import com.the.lightspace.R;
 
+import java.util.ArrayList;
+
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
 
     ImageView icShare;
+
+    ArrayList<ThreeTabsList> newList;
 
 
     @Override
@@ -44,7 +48,18 @@ public class MainActivity extends BaseActivity
         icShare = (ImageView) findViewById(R.id.icShare);
         Toolbar toolbar = (Toolbar) findViewById(R.id.mToolbar);
         setSupportActionBar(toolbar);
-
+        newList = new ArrayList<>();
+        for (int i = 0; i < baseApplication.myAllPlaylistsResponse.getItems().size(); i++) {
+            String tabName = baseApplication.myAllPlaylistsResponse.getItems().get(i).getSnippet().getTitle();
+            if (tabName.equalsIgnoreCase("philosophy")
+                    || tabName.equalsIgnoreCase("Let's Get Spiritual!")
+                    || tabName.equalsIgnoreCase("Get Motivated!")) {
+                ThreeTabsList model = new ThreeTabsList();
+                model.setTabName(baseApplication.myAllPlaylistsResponse.getItems().get(i).getSnippet().getTitle());
+                model.setTabId(baseApplication.myAllPlaylistsResponse.getItems().get(i).getId());
+                newList.add(model);
+            }
+        }
         clickListeners();
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -53,8 +68,7 @@ public class MainActivity extends BaseActivity
         viewPager.setAdapter(pagerAdapter);
 
         // Give the TabLayout the ViewPager
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.mTabLayout);
         tabLayout.setupWithViewPager(viewPager);
 
         // Iterate over all tabs and set the custom view
@@ -136,20 +150,16 @@ public class MainActivity extends BaseActivity
         public PagerAdapter(FragmentManager fm, Context context) {
             super(fm);
             this.context = context;
-            tabTitles = new String[baseApplication.myAllPlaylistsResponse.getItems().size()];
-            Log.e("no of Playlist", " " + baseApplication.myAllPlaylistsResponse.getItems().size() + "");
-
-
-            for (int i = 0; i < (baseApplication.myAllPlaylistsResponse.getItems().size()); i++) {
-                tabTitles[i] = baseApplication.myAllPlaylistsResponse.getItems().get(i).getSnippet().getTitle();
-                Log.e("Tab Title", " " + baseApplication.myAllPlaylistsResponse.getItems().get(i).getSnippet().getTitle().toString() + "");
-
+            tabTitles = new String[newList.size()];
+            for (int i = 0; i < tabTitles.length; i++) {
+                tabTitles[i] = newList.get(i).getTabName();
             }
 
         }
 
         @Override
         public int getCount() {
+            Log.e("tabCunt", tabTitles.length+"");
             return tabTitles.length;
         }
 
@@ -158,15 +168,15 @@ public class MainActivity extends BaseActivity
 
             switch (position) {
                 case 0:
-                    return new myFirstFragment().newInstance(baseApplication.myAllPlaylistsResponse.getItems().get(position).getId());
+                    return new myFirstFragment().newInstance(newList.get(0).getTabId());
                 case 1:
-                    return new mySecondFragment().newInstance(baseApplication.myAllPlaylistsResponse.getItems().get(position).getId());
+                    return new mySecondFragment().newInstance(newList.get(1).getTabId());
                 case 2:
-                    return new myThirdFragment().newInstance(baseApplication.myAllPlaylistsResponse.getItems().get(position).getId());
-                case 3:
-                    return new myFourtFragment().newInstance(baseApplication.myAllPlaylistsResponse.getItems().get(position).getId());
-                case 4:
-                    return new myFifthFragment().newInstance(baseApplication.myAllPlaylistsResponse.getItems().get(position).getId());
+                    return new myThirdFragment().newInstance(newList.get(2).getTabId());
+//                case 3:
+//                    return new myFourtFragment().newInstance(baseApplication.myAllPlaylistsResponse.getItems().get(position).getId());
+//                case 4:
+//                    return new myFifthFragment().newInstance(baseApplication.myAllPlaylistsResponse.getItems().get(position).getId());
             }
 
             return null;
@@ -181,7 +191,6 @@ public class MainActivity extends BaseActivity
         public View getTabView(int position) {
             View tab = LayoutInflater.from(MainActivity.this).inflate(R.layout.custom_tab, null);
             TextView tv = (TextView) tab.findViewById(R.id.custom_text);
-
             tv.setText(tabTitles[position]);
             return tab;
         }
@@ -195,5 +204,28 @@ public class MainActivity extends BaseActivity
         sendIntent.setType("text/plain");
         startActivity(sendIntent);
     }
+
+    public class ThreeTabsList {
+
+        String tabName, tabId;
+
+        public String getTabName() {
+            return tabName;
+        }
+
+        public void setTabName(String tabName) {
+            this.tabName = tabName;
+        }
+
+        public String getTabId() {
+            return tabId;
+        }
+
+        public void setTabId(String tabId) {
+            this.tabId = tabId;
+        }
+    }
 }
+
+
 

@@ -3,6 +3,7 @@ package com.the.lightspace.Adapters;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by Cool Programmer on 4/24/2018.
@@ -61,7 +63,28 @@ public class AdapterCategories extends RecyclerView.Adapter<ViewHolder> {
         } else {
             holder.tvDescription.setText(list.get(position).getDescription());
         }
-            holder.tvPublishedAt.setText(list.get(position).getPublishedAt());        //holder.tvPublishedAt.setText(Instant.parse(list.get(position).getPublishedAt()).toString());
+
+        SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat out = new SimpleDateFormat("MMM dd, yyyy");
+        try {
+            Date date = in.parse(splitDateAndTime(list.get(position).getPublishedAt().toString()));
+            holder.tvPublishedAt.setText(out.format(date));
+            Log.e("myDate", date + "");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+//        SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+//        try {
+//            Date date = format.parse(splitDateAndTime(list.get(position).getPublishedAt()));
+//
+//            holder.tvPublishedAt.setText(date.getMonth() + " " + date.getDate() + ", " + date.getYear());        //holder.tvPublishedAt.setText(Instant.parse(list.get(position).getPublishedAt()).toString());
+//
+//            System.out.println(date);
+//            Log.e("myDate", date + "");
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
 
 
         holder.ivPlay.setOnClickListener(new View.OnClickListener() {
@@ -94,18 +117,13 @@ public class AdapterCategories extends RecyclerView.Adapter<ViewHolder> {
         return (null != list ? list.size() : 0);
     }
 
-    public String convertFormate(String time) {
 
-        //first you need to use proper date formatter
-        DateFormat df = new SimpleDateFormat("MMM dd yyyy hh:mmaa");
-        Date date = null;// converting String to date
-        try {
-            date = df.parse(time);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-//        System.out.println(df.format(date));
-        return date.toString();
+    public String splitDateAndTime(String s) {
+
+        String[] separated = s.split("T");
+
+        Log.e("separated", separated[0] + "");
+        return separated[0];
     }
 
 }
@@ -146,4 +164,6 @@ class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
         clickListener.onClick(view, getPosition(), true);
         return true;
     }
+
+
 }
