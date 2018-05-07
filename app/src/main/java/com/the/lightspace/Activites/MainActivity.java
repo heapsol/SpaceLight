@@ -20,6 +20,8 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.the.lightspace.BaseClasses.BaseActivity;
 
 import com.the.lightspace.Fragments.myFifthFragment;
@@ -44,6 +46,11 @@ public class MainActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+
+        AdView adView = (AdView) findViewById(R.id.myAddView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+
+        adView.loadAd(adRequest);
 
         icShare = (ImageView) findViewById(R.id.icShare);
         Toolbar toolbar = (Toolbar) findViewById(R.id.mToolbar);

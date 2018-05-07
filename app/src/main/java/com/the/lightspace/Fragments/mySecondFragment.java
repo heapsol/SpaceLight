@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.the.lightspace.Adapters.AdapterCategories;
 import com.the.lightspace.BaseClasses.BaseFragment;
 import com.the.lightspace.Models.VideoEntry;
@@ -48,6 +50,8 @@ public class mySecondFragment extends BaseFragment implements AllVideosApi.AllVi
                              Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         view = inflater.inflate(R.layout.fragment_my_collection, container, false);
+
+
 
 
         init(view);
