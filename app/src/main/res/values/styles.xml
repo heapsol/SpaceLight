@@ -13,11 +13,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="AppTheme.ActionBarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
-        <!-- THIS is where you can color the arrow and the overflow button! -->
-        <item name="colorControlNormal">@color/colorPrimaryDark</item> <!-- sets the color for the back arrow -->
-        <item name="actionOverflowButtonStyle">@style/actionOverflowButtonStyle</item> <!-- sets the style for the overflow button -->
-    </style>
+        <style name="AppTheme.ActionBarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+            <!-- THIS is where you can color the arrow and the overflow button! -->
+            <item name="colorControlNormal">@color/colorPrimaryDark</item> <!-- sets the color for the back arrow -->
+            <item name="actionOverflowButtonStyle">@style/actionOverflowButtonStyle</item> <!-- sets the style for the overflow button -->
+        </style>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>

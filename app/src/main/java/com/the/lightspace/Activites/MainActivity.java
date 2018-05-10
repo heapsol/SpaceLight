@@ -58,9 +58,9 @@ public class MainActivity extends BaseActivity
         newList = new ArrayList<>();
         for (int i = 0; i < baseApplication.myAllPlaylistsResponse.getItems().size(); i++) {
             String tabName = baseApplication.myAllPlaylistsResponse.getItems().get(i).getSnippet().getTitle();
-            if (tabName.equalsIgnoreCase("philosophy")
-                    || tabName.equalsIgnoreCase("Let's Get Spiritual!")
-                    || tabName.equalsIgnoreCase("Get Motivated!")) {
+            if (tabName.equalsIgnoreCase("Motivation")
+                    || tabName.equalsIgnoreCase("Spirituality")
+                    || tabName.equalsIgnoreCase("Philosophy")) {
                 ThreeTabsList model = new ThreeTabsList();
                 model.setTabName(baseApplication.myAllPlaylistsResponse.getItems().get(i).getSnippet().getTitle());
                 model.setTabId(baseApplication.myAllPlaylistsResponse.getItems().get(i).getId());
