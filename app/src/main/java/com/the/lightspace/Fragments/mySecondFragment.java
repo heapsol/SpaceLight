@@ -52,8 +52,6 @@ public class mySecondFragment extends BaseFragment implements AllVideosApi.AllVi
         view = inflater.inflate(R.layout.fragment_my_collection, container, false);
 
 
-
-
         init(view);
         clickListeners();
         fetchData();
@@ -92,7 +90,15 @@ public class mySecondFragment extends BaseFragment implements AllVideosApi.AllVi
             model.setTitle(allVideosResponses.getItems().get(k).snippet.getTitle());
 //            Log.e("Video Ids", " "+allVideosResponses.getItems().get(k).snippet.resourceId.getVideoId());
             model.setVideoId(allVideosResponses.getItems().get(k).snippet.resourceId.getVideoId());
-            model.setThumbnailsMedium(allVideosResponses.getItems().get(k).snippet.thumbnails.medium.getUrl());
+
+            if (allVideosResponses.getItems().get(k).snippet.thumbnails.standard.getUrl() == null) {
+                model.setThumbnailsMedium(allVideosResponses.getItems().get(k).snippet.thumbnails.medium.getUrl());
+                Log.e("Medium", allVideosResponses.getItems().get(k).snippet.thumbnails.medium.getUrl() + "");
+            } else {
+                model.setThumbnailsMedium(allVideosResponses.getItems().get(k).snippet.thumbnails.standard.getUrl());
+                Log.e("Standard", allVideosResponses.getItems().get(k).snippet.thumbnails.standard.getUrl() + "");
+            }
+
             model.setPublishedAt(allVideosResponses.getItems().get(k).snippet.getPublishedAt());
             model.setDescription(allVideosResponses.getItems().get(k).snippet.getDescription());
             list.add(model);

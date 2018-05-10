@@ -88,7 +88,7 @@ public class myFifthFragment extends BaseFragment implements AllVideosApi.AllVid
             model.setTitle(allVideosResponses.getItems().get(k).snippet.getTitle());
 //            Log.e("Video Ids", " "+allVideosResponses.getItems().get(k).snippet.resourceId.getVideoId());
             model.setVideoId(allVideosResponses.getItems().get(k).snippet.resourceId.getVideoId());
-            model.setThumbnailsMedium(allVideosResponses.getItems().get(k).snippet.thumbnails.medium.getUrl());
+            model.setThumbnailsMedium(allVideosResponses.getItems().get(k).snippet.thumbnails.standard.getUrl());
             model.setPublishedAt(allVideosResponses.getItems().get(k).snippet.getPublishedAt());
             model.setDescription(allVideosResponses.getItems().get(k).snippet.getDescription());
             list.add(model);

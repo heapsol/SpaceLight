@@ -158,9 +158,12 @@ public class MainActivity extends BaseActivity
             super(fm);
             this.context = context;
             tabTitles = new String[newList.size()];
-            for (int i = 0; i < tabTitles.length; i++) {
-                tabTitles[i] = newList.get(i).getTabName();
-            }
+            tabTitles[0] = newList.get(2).getTabName();
+            tabTitles[1] = newList.get(1).getTabName();
+            tabTitles[2] = newList.get(0).getTabName();
+//            for (int i = 0; i < tabTitles.length; i++) {
+//                tabTitles[i] = newList.get(i).getTabName();
+//            }
 
         }
 
@@ -175,11 +178,11 @@ public class MainActivity extends BaseActivity
 
             switch (position) {
                 case 0:
-                    return new myFirstFragment().newInstance(newList.get(0).getTabId());
+                    return new myFirstFragment().newInstance(newList.get(2).getTabId());
                 case 1:
                     return new mySecondFragment().newInstance(newList.get(1).getTabId());
                 case 2:
-                    return new myThirdFragment().newInstance(newList.get(2).getTabId());
+                    return new myThirdFragment().newInstance(newList.get(0).getTabId());
 //                case 3:
 //                    return new myFourtFragment().newInstance(baseApplication.myAllPlaylistsResponse.getItems().get(position).getId());
 //                case 4:

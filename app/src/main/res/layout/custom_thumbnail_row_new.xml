@@ -107,7 +107,7 @@
                 android:layout_margin="5dp"
                 android:gravity="center"
                 android:singleLine="true"
-                android:text="The Space Light  "
+                android:text=" The Light Space "
                 android:textColor="@android:color/white" />
 
         </RelativeLayout>
