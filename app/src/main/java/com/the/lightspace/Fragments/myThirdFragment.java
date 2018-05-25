@@ -1,7 +1,12 @@
 package com.the.lightspace.Fragments;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -29,13 +34,14 @@ import java.util.ArrayList;
 
 public class myThirdFragment extends BaseFragment implements AllVideosApi.AllVideosCallbackListener {
 
-
+    private LocalBroadcastManager localBroadcastManager;
     private View view;
     private ProgressDialog progress;
     private RecyclerView rvCategories;
     public ArrayList<VideoEntry> list;
     private String playlistId;
     private static myThirdFragment fragment;
+    AdapterCategories adapter;
 
     public static myThirdFragment newInstance(String PlaylistID) {
         Bundle args = new Bundle();
@@ -67,6 +73,9 @@ public class myThirdFragment extends BaseFragment implements AllVideosApi.AllVid
         progress.setIndeterminate(true);
         progress.setCancelable(false);
         progress.show();
+
+        localBroadcastManager = LocalBroadcastManager.getInstance(getContext());
+        localBroadcastManager.registerReceiver(mReceiver, new IntentFilter("FavBroadCast"));
 
     }
 
@@ -106,7 +115,7 @@ public class myThirdFragment extends BaseFragment implements AllVideosApi.AllVid
         manager.setReverseLayout(true);
         rvCategories.setLayoutManager(manager);
         rvCategories.addItemDecoration(new LinearDividerItemDecoration(getContext(), getResources().getColor(R.color.colorScreenBackground), 20));
-        AdapterCategories adapter = new AdapterCategories(list, getActivity());
+         adapter = new AdapterCategories(list, getActivity());
         rvCategories.setNestedScrollingEnabled(false);
         rvCategories.setAdapter(adapter);
     }
@@ -115,6 +124,25 @@ public class myThirdFragment extends BaseFragment implements AllVideosApi.AllVid
     public void onError(String error) {
         Log.e("error", " " + error);
     }
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
 
+        @Override
+        public void onReceive(Context context, Intent intent) {
+//            category = intent.getStringExtra("Notification");
+            Log.e(" I am in Receiver", "" + intent.getPackage());
+            String status = "null";
+            status = intent.getStringExtra("fav");
+            Log.e("status", "" + status);
+            if(status.equals("removed")){
+                adapter.notifyDataSetChanged();
+            }
+        }
+    };
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        localBroadcastManager.unregisterReceiver(mReceiver);
+    }
 }
 

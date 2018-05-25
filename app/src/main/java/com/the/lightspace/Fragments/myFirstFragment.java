@@ -1,7 +1,12 @@
 package com.the.lightspace.Fragments;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,6 +18,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.the.lightspace.Adapters.AdapterCategories;
 import com.the.lightspace.BaseClasses.BaseFragment;
+import com.the.lightspace.DatabaseHandler.DatabaseHandler;
 import com.the.lightspace.Models.VideoEntry;
 import com.the.lightspace.Network.Api;
 import com.the.lightspace.Network.api.AllVideos.AllVideosApi;
@@ -29,13 +35,15 @@ import java.util.ArrayList;
 
 public class myFirstFragment extends BaseFragment implements AllVideosApi.AllVideosCallbackListener {
 
-
+    private LocalBroadcastManager localBroadcastManager;
     private View view;
     private ProgressDialog progress;
     private RecyclerView rvCategories;
     public ArrayList<VideoEntry> list;
     private String playlistId;
     private static myFirstFragment fragment;
+    DatabaseHandler db;
+    AdapterCategories adapter;
 
     public static myFirstFragment newInstance(String PlaylistID) {
         Bundle args = new Bundle();
@@ -68,6 +76,9 @@ public class myFirstFragment extends BaseFragment implements AllVideosApi.AllVid
         progress.setIndeterminate(true);
         progress.setCancelable(false);
         progress.show();
+
+        localBroadcastManager = LocalBroadcastManager.getInstance(getContext());
+        localBroadcastManager.registerReceiver(mReceiver, new IntentFilter("FavBroadCast"));
 
     }
 
@@ -107,7 +118,7 @@ public class myFirstFragment extends BaseFragment implements AllVideosApi.AllVid
         manager.setReverseLayout(true);
         rvCategories.setLayoutManager(manager);
         rvCategories.addItemDecoration(new LinearDividerItemDecoration(getContext(), getResources().getColor(R.color.colorScreenBackground), 20));
-        AdapterCategories adapter = new AdapterCategories(list, getActivity());
+        adapter = new AdapterCategories(list, getActivity());
         rvCategories.setNestedScrollingEnabled(false);
         rvCategories.setAdapter(adapter);
     }
@@ -117,6 +128,25 @@ public class myFirstFragment extends BaseFragment implements AllVideosApi.AllVid
         Log.e("error", " " + error);
     }
 
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
 
+        @Override
+        public void onReceive(Context context, Intent intent) {
+//            category = intent.getStringExtra("Notification");
+            Log.e(" I am in Receiver", "" + intent.getPackage());
+            String status = "null";
+            status = intent.getStringExtra("fav");
+            Log.e("status", "" + status);
+            if(status.equals("removed")){
+                adapter.notifyDataSetChanged();
+            }
+        }
+    };
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        localBroadcastManager.unregisterReceiver(mReceiver);
+    }
 }
 

@@ -1,13 +1,18 @@
 package com.the.lightspace.Activites;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +24,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -38,7 +44,6 @@ public class MainActivity extends BaseActivity
 
 
     ImageView icShare;
-
     ArrayList<ThreeTabsList> newList;
 
 
@@ -129,8 +134,10 @@ public class MainActivity extends BaseActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-        if (id == R.id.nav_about_us) {
+        if (id == R.id.nav_fav) {
+            Intent i = new Intent(MainActivity.this, FavoriteActivity.class);
+            startActivity(i);
+        } else if (id == R.id.nav_about_us) {
             Intent i = new Intent(MainActivity.this, AboutActivity.class);
             startActivity(i);
         } else if (id == R.id.nav_app_info) {
@@ -169,7 +176,7 @@ public class MainActivity extends BaseActivity
 
         @Override
         public int getCount() {
-            Log.e("tabCunt", tabTitles.length+"");
+            Log.e("tabCunt", tabTitles.length + "");
             return tabTitles.length;
         }
 
@@ -235,6 +242,10 @@ public class MainActivity extends BaseActivity
             this.tabId = tabId;
         }
     }
+
+
+
+
 }
 
 

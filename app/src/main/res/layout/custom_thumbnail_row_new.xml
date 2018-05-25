@@ -6,10 +6,10 @@
     android:elevation="10dp">
 
     <RelativeLayout
-        android:background="@color/colorTabBackground"
-
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+
+        android:layout_height="wrap_content"
+        android:background="@color/colorTabBackground">
 
         <RelativeLayout
             android:id="@+id/rlImg"
@@ -31,6 +31,7 @@
                 android:layout_centerInParent="true"
                 android:scaleType="fitXY"
                 android:src="@drawable/ic_play_button" />
+
         </RelativeLayout>
 
         <LinearLayout
@@ -66,9 +67,9 @@
                     android:id="@+id/tvTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:maxLines="2"
-                    android:ellipsize="end"
                     android:text="Prizm- Official Video (Thumbnail)"
                     android:textColor="@color/colorPrimaryDark"
                     android:textStyle="bold" />
@@ -82,12 +83,59 @@
                     android:text="Description"
                     android:visibility="visible" />
 
-                <TextView
-                    android:id="@+id/tvPublishedAt"
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:text="20 hours ago" />
+                    android:gravity="center_vertical">
+
+
+                    <TextView
+                        android:id="@+id/tvPublishedAt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="20 hours ago" />
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true">
+
+
+                        <TextView
+                            android:id="@+id/tvFav"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="10dp"
+                            android:layout_toLeftOf="@+id/rlFav"
+                            android:text="Favorite"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textStyle="bold" />
+
+                        <RelativeLayout
+                            android:id="@+id/rlFav"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true">
+
+
+                            <ImageView
+                                android:id="@+id/ivUnfav"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/ic_unfav" />
+
+                            <ImageView
+                                android:id="@+id/ivFav"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/ic_fav"
+                                android:visibility="gone" />
+                        </RelativeLayout>
+                    </RelativeLayout>
+                </RelativeLayout>
             </LinearLayout>
         </LinearLayout>
 

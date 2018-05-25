@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import com.the.lightspace.Activites.YouTubePlayerFragmentActivity;
+import com.the.lightspace.DatabaseHandler.DatabaseHandler;
+import com.the.lightspace.DatabaseHandler.DbModel;
 import com.the.lightspace.Fragments.myFirstFragment;
 import com.the.lightspace.Models.VideoEntry;
 import com.the.lightspace.R;
@@ -29,29 +31,32 @@ import java.util.Locale;
  * Created by Cool Programmer on 4/24/2018.
  */
 
-public class AdapterCategories extends RecyclerView.Adapter<ViewHolder> {
+public class AdapterCategories extends RecyclerView.Adapter<CatViewHolder> {
 
     private ArrayList<VideoEntry> list;
     private Activity mContext;
+    private DatabaseHandler db;
 
     public AdapterCategories(ArrayList<VideoEntry> list, Activity context) {
         this.list = list;
         mContext = context;
 //        Log.e("value", " " + list.size());
+        db = new DatabaseHandler(mContext);
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CatViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.custom_thumbnail_row_new, null);
-        ViewHolder holder = new ViewHolder(view);
+        CatViewHolder holder = new CatViewHolder(view);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position) {
+    public void onBindViewHolder(final CatViewHolder holder, final int position) {
 
 //        Log.e("value", " " + list.get(position).getVideoId());
+
 
         holder.tvTitle.setText(list.get(position).getTitle());
         Glide.with(mContext)
@@ -64,29 +69,53 @@ public class AdapterCategories extends RecyclerView.Adapter<ViewHolder> {
             holder.tvDescription.setText(list.get(position).getDescription());
         }
 
-        SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat out = new SimpleDateFormat("MMM dd, yyyy");
+        final SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
+        final SimpleDateFormat out = new SimpleDateFormat("MMM dd, yyyy");
         try {
-            Date date = in.parse(splitDateAndTime(list.get(position).getPublishedAt().toString()));
+            final Date date = in.parse(splitDateAndTime(list.get(position).getPublishedAt().toString()));
             holder.tvPublishedAt.setText(out.format(date));
             Log.e("myDate", date + "");
+
+
+            if (db.checkDuplicate(list.get(position).getVideoId()) == 0) {
+                holder.ivUnfav.setVisibility(View.VISIBLE);
+                holder.ivFav.setVisibility(View.GONE);
+                holder.tvFav.setText("Add Favorite");
+            } else {
+                holder.ivFav.setVisibility(View.VISIBLE);
+                holder.ivUnfav.setVisibility(View.GONE);
+                holder.tvFav.setText("Remove Favorite");
+            }
+
+            holder.ivFav.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    holder.ivFav.setVisibility(View.GONE);
+                    holder.ivUnfav.setVisibility(View.VISIBLE);
+                    db.delete(list.get(position).getVideoId());
+                    Log.e("Removed Item", list.get(position).getVideoId());
+                    holder.tvFav.setText("Add Favorite");
+                }
+            });
+            holder.ivUnfav.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DbModel model = new DbModel();
+                    model.setVideoID(list.get(position).getVideoId());
+                    model.setTitle(list.get(position).getTitle());
+                    model.setThumbnailUrl(list.get(position).getThumbnailsMedium());
+                    model.setDescription(list.get(position).getDescription());  //list.get(position).getDescription()
+                    model.setPubishedAt(out.format(date).toString());    //out.format(date)
+                    holder.tvFav.setText("Remove Favorite");
+                    holder.ivUnfav.setVisibility(View.GONE);
+                    holder.ivFav.setVisibility(View.VISIBLE);
+                    db.add(model);
+                    Log.e("Added Item", list.get(position).getVideoId());
+                }
+            });
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-//        SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
-//        try {
-//            Date date = format.parse(splitDateAndTime(list.get(position).getPublishedAt()));
-//
-//            holder.tvPublishedAt.setText(date.getMonth() + " " + date.getDate() + ", " + date.getYear());        //holder.tvPublishedAt.setText(Instant.parse(list.get(position).getPublishedAt()).toString());
-//
-//            System.out.println(date);
-//            Log.e("myDate", date + "");
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-
-
         holder.ivPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,26 +157,30 @@ public class AdapterCategories extends RecyclerView.Adapter<ViewHolder> {
 
 }
 
-class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+class CatViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
     private ItemClickListener clickListener;
     public ImageView ivThumbnail, ivPlay;
-    public TextView tvTitle, tvPublishedAt, tvDescription;
+    public TextView tvTitle, tvPublishedAt, tvDescription, tvFav;
     public View v;
+    ImageView ivFav, ivUnfav;
 
 
-    public ViewHolder(View view) {
+    public CatViewHolder(View view) {
         super(view);
 
         view.setTag(view);
         view.setOnClickListener(this);
         view.setOnLongClickListener(this);
+        this.tvFav = (TextView) view.findViewById(R.id.tvFav);
         this.ivThumbnail = (ImageView) view.findViewById(R.id.ivThumbnail);
         this.tvTitle = (TextView) view.findViewById(R.id.tvTitle);
         this.tvPublishedAt = (TextView) view.findViewById(R.id.tvPublishedAt);
         this.tvDescription = (TextView) view.findViewById(R.id.tvDescription);
         this.v = (View) view.findViewById(R.id.vi);
         this.ivPlay = (ImageView) view.findViewById(R.id.ivPlay);
+        this.ivFav = (ImageView) view.findViewById(R.id.ivFav);
+        this.ivUnfav = (ImageView) view.findViewById(R.id.ivUnfav);
     }
 
     public void setClickListener(ItemClickListener itemClickListener) {
