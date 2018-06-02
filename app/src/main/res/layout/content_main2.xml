@@ -7,7 +7,20 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Activites.MainActivity">
+    <include
+        android:id="@+id/progressAdd"
+        layout="@layout/insertial_add_loader"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:layout_centerInParent="true" />
+<FrameLayout
+    android:id="@+id/dialogContainer"
+    android:layout_width="wrap_content"
+    android:layout_centerInParent="true"
+    android:layout_height="wrap_content">
 
+</FrameLayout>
     <com.google.android.gms.ads.AdView
         android:id="@+id/myAddView"
         android:layout_width="match_parent"

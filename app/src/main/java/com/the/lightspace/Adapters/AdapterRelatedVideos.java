@@ -11,59 +11,49 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-
-
 import com.the.lightspace.Activites.BasicPlayerActivity;
 import com.the.lightspace.BaseClasses.BaseApplication;
 import com.the.lightspace.DatabaseHandler.DatabaseHandler;
 import com.the.lightspace.DatabaseHandler.DbModel;
-import com.the.lightspace.Fragments.myFirstFragment;
 import com.the.lightspace.Models.VideoEntry;
 import com.the.lightspace.R;
 import com.the.lightspace.Util.ItemClickListener;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Locale;
 
 /**
- * Created by Cool Programmer on 4/24/2018.
+ * Created by Cool Programmer on 5/30/2018.
  */
 
-public class AdapterCategories extends RecyclerView.Adapter<CatViewHolder> {
+public class AdapterRelatedVideos extends RecyclerView.Adapter<RelatedViewHolder> {
 
     private ArrayList<VideoEntry> list;
     private Activity mContext;
     private DatabaseHandler db;
-    private Date date;
 
-    public AdapterCategories(ArrayList<VideoEntry> list, Activity context) {
+    public AdapterRelatedVideos(ArrayList<VideoEntry> list, Activity context) {
         this.list = list;
         mContext = context;
-//        Log.e("value", " " + list.size());
-        db = new DatabaseHandler(mContext);
-
+        Log.e("RelatedList", " " + list.size());
+        db = new DatabaseHandler(context);
     }
 
     @Override
-    public CatViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.custom_thumbnail_row_new, null);
-        CatViewHolder holder = new CatViewHolder(view);
-        return holder;
+    public RelatedViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_playlist_row, null);
+
+        RelatedViewHolder viewHolder = new RelatedViewHolder(view);
+        return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(final CatViewHolder holder, final int position) {
-
-//        Log.e("value", " " + list.get(position).getVideoId());
+    public void onBindViewHolder(final RelatedViewHolder holder, final int position) {
 
 
         holder.tvTitle.setText(list.get(position).getTitle());
-
         Glide.with(mContext)
                 .load(list.get(position).getThumbnailsMedium())
                 .into((holder.ivThumbnail));
@@ -73,15 +63,13 @@ public class AdapterCategories extends RecyclerView.Adapter<CatViewHolder> {
         } else {
             holder.tvDescription.setText(list.get(position).getDescription());
         }
-        Log.e("BDate", list.get(position).getPublishedAt() + "");
 
         final SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
         final SimpleDateFormat out = new SimpleDateFormat("MMM dd, yyyy");
         try {
-            date = in.parse(splitDateAndTime(list.get(position).getPublishedAt().toString()));
+            final Date date = in.parse(splitDateAndTime(list.get(position).getPublishedAt().toString()));
             holder.tvPublishedAt.setText(out.format(date));
             Log.e("myDate", date + "");
-
 
             if (db.checkDuplicate(list.get(position).getVideoId()) == 0) {
                 holder.ivUnfav.setVisibility(View.VISIBLE);
@@ -92,6 +80,7 @@ public class AdapterCategories extends RecyclerView.Adapter<CatViewHolder> {
                 holder.ivUnfav.setVisibility(View.GONE);
                 holder.tvFav.setText("Remove Favorite");
             }
+
             holder.ivFav.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -124,16 +113,15 @@ public class AdapterCategories extends RecyclerView.Adapter<CatViewHolder> {
         holder.ivPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                BaseApplication.relatedList = list;
+//                for(int z = 0; z<list.size();z++){
+//
+//                }
+                Log.e("listsize", ""+list.size());
                 Intent i = new Intent(mContext, BasicPlayerActivity.class);
                 i.putExtra("videoID", list.get(position).getVideoId().toString());
                 i.putExtra("position", position);
                 i.putExtra("title", list.get(position).getTitle().toString());
                 i.putExtra("description", list.get(position).getDescription().toString());
-                i.putExtra("publishedAt", out.format(date).toString());
-                i.putExtra("thumbnail", list.get(position).getThumbnailsMedium());
-
                 mContext.startActivity(i);
             }
         });
@@ -148,15 +136,13 @@ public class AdapterCategories extends RecyclerView.Adapter<CatViewHolder> {
 //                mContext.startActivity(i);
             }
         });
-
     }
 
     @Override
     public int getItemCount() {
+
         return (null != list ? list.size() : 0);
     }
-
-
     public String splitDateAndTime(String s) {
 
         String[] separated = s.split("T");
@@ -167,8 +153,7 @@ public class AdapterCategories extends RecyclerView.Adapter<CatViewHolder> {
 
 }
 
-class CatViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
-
+class RelatedViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
     private ItemClickListener clickListener;
     public ImageView ivThumbnail, ivPlay;
     public TextView tvTitle, tvPublishedAt, tvDescription, tvFav;
@@ -176,13 +161,12 @@ class CatViewHolder extends RecyclerView.ViewHolder implements View.OnClickListe
     ImageView ivFav, ivUnfav;
 
 
-    public CatViewHolder(View view) {
+    public RelatedViewHolder(View view) {
         super(view);
 
         view.setTag(view);
         view.setOnClickListener(this);
         view.setOnLongClickListener(this);
-        this.tvFav = (TextView) view.findViewById(R.id.tvFav);
         this.ivThumbnail = (ImageView) view.findViewById(R.id.ivThumbnail);
         this.tvTitle = (TextView) view.findViewById(R.id.tvTitle);
         this.tvPublishedAt = (TextView) view.findViewById(R.id.tvPublishedAt);
@@ -191,6 +175,8 @@ class CatViewHolder extends RecyclerView.ViewHolder implements View.OnClickListe
         this.ivPlay = (ImageView) view.findViewById(R.id.ivPlay);
         this.ivFav = (ImageView) view.findViewById(R.id.ivFav);
         this.ivUnfav = (ImageView) view.findViewById(R.id.ivUnfav);
+        this.tvFav = (TextView) view.findViewById(R.id.tvFav);
+
     }
 
     public void setClickListener(ItemClickListener itemClickListener) {

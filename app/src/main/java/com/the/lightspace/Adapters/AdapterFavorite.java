@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.the.lightspace.Activites.YouTubePlayerFragmentActivity;
+import com.the.lightspace.Activites.BasicPlayerActivity;
 import com.the.lightspace.DatabaseHandler.DatabaseHandler;
 import com.the.lightspace.DatabaseHandler.DbModel;
 import com.the.lightspace.R;
@@ -118,7 +118,7 @@ public class AdapterFavorite extends RecyclerView.Adapter<ViewHolder> {
         holder.ivPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(mContext, YouTubePlayerFragmentActivity.class);
+                Intent i = new Intent(mContext, BasicPlayerActivity.class);
                 i.putExtra("videoID", list.get(position).getVideoID().toString());
                 i.putExtra("position", position);
                 i.putExtra("title", list.get(position).getTitle().toString());

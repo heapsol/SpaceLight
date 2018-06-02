@@ -95,6 +95,10 @@ public class myFirstFragment extends BaseFragment implements AllVideosApi.AllVid
     @Override
     public void onVideosRetrieve(AllVideosResponse allVideosResponses) {
 //        Log.e("item data", " " + allVideosResponses.())
+//        Log.e("itemSize", allVideosResponses.getItems().size()+"");
+//        for(int i = 0; i< allVideosResponses.getItems().size(); i++){
+//            Log.e("Pub@Con", allVideosResponses.getItems().get(i).snippet.getPublishedAt());
+//        }
         for (int k = 0; k < allVideosResponses.getItems().size(); k++) {
 
             VideoEntry model = new VideoEntry();
@@ -110,6 +114,7 @@ public class myFirstFragment extends BaseFragment implements AllVideosApi.AllVid
                 Log.e("Standard", allVideosResponses.getItems().get(k).snippet.thumbnails.standard.getUrl() + "");
             }
             model.setPublishedAt(allVideosResponses.getItems().get(k).snippet.getPublishedAt());
+            Log.e("published", allVideosResponses.getItems().get(k).snippet.getPublishedAt() + "");
             model.setDescription(allVideosResponses.getItems().get(k).snippet.getDescription());
             list.add(model);
         }
@@ -118,6 +123,7 @@ public class myFirstFragment extends BaseFragment implements AllVideosApi.AllVid
         manager.setReverseLayout(true);
         rvCategories.setLayoutManager(manager);
         rvCategories.addItemDecoration(new LinearDividerItemDecoration(getContext(), getResources().getColor(R.color.colorScreenBackground), 20));
+
         adapter = new AdapterCategories(list, getActivity());
         rvCategories.setNestedScrollingEnabled(false);
         rvCategories.setAdapter(adapter);
